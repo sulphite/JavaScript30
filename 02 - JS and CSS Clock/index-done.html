@@ -63,11 +63,38 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform: rotate(90deg);
+      transform-origin: 100%;
+      transition: all 0.05s;
+      transition-timing-function: ease-in-out;
+      border-radius: 3px 0 0 3px;
     }
+
+    .second-hand {background: rgb(211, 9, 9)}
 
   </style>
 
   <script>
+    const secondHand = document.querySelector(".second-hand")
+    const minuteHand = document.querySelector(".min-hand")
+    const hourHand = document.querySelector(".hour-hand")
+    // create function to calc rotation for a hand based on
+    // desired position and max position
+    const getAngle = (time, max) => {
+      return (360 * time / max) + 90
+    }
+    // create function to run every second
+    setInterval(() => {
+      const now = new Date();
+      const sRotation = getAngle(now.getSeconds(),60)
+      const mRotation = getAngle(now.getMinutes(),60)
+      const hRotation = getAngle(now.getHours(),12)
+
+      secondHand.style.transform = `rotate(${sRotation}deg)`;
+      minuteHand.style.transform = `rotate(${mRotation}deg)`;
+      hourHand.style.transform = `rotate(${hRotation}deg)`;
+
+    }, 1000);
 
 
   </script>
