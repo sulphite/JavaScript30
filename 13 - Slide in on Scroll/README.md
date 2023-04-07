@@ -33,4 +33,30 @@ will check where every image is relative to the window and apply or remove the
   least that much time in between function calls, blocking all the other times you
   might be triggering the event.
 4. So make sure to wrap your function call in the event listener inside `debounce()`.
-5. Inside the function let's iterate over all the images and for each one,
+5. Inside the function let's iterate over all the images. For each one, we want
+  to calculate the position of the midpoint of the image (hint: look up the
+  property `offsetTop`) and the position of the bottom of the window (hint:
+  use `window.scrollY` and `window.innerHeight`). If the midpoint is less
+  than the window bottom, then we've scrolled at least half of the image in so
+  we should add the `.active` class.
+6. If we want to be a bit extra we can remove the .active class when the image is
+  no longer in view. If the midpoint is less than window bottom by _more than the
+  full height of the viewport_, it is no longer in view and we should remove the
+  `.active` class.
+7. Refactor all that into a tidy ternary if you like. Job done!
+
+<solution>
+  <title>Solution (just the event handler)</title>
+
+  ```js
+  const checkImages = (e) => {
+      images.forEach((image) => {
+        const windowBottom = window.scrollY + window.innerHeight
+        const midpoint = image.offsetTop + image.height / 2
+        const relPosition = windowBottom - midpoint
+        const inView = relPosition > 0 && window.innerHeight > relPosition
+        inView ? image.classList.add("active") : image.classList.remove("active")
+        })
+    }
+  ```
+</solution>
