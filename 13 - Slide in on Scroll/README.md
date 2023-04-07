@@ -45,8 +45,10 @@ will check where every image is relative to the window and apply or remove the
   `.active` class.
 7. Refactor all that into a tidy ternary if you like. Job done!
 
-<solution>
-  <title>Solution (just the event handler)</title>
+## Solution
+
+<details>
+  <summary>Solution (just the event handler)</summary>
 
   ```js
   const checkImages = (e) => {
@@ -59,4 +61,4 @@ will check where every image is relative to the window and apply or remove the
         })
     }
   ```
-</solution>
+</details>
