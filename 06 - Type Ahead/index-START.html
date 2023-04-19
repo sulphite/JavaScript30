@@ -16,8 +16,27 @@
     </ul>
   </form>
 <script>
-const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+  const cities = []
+  async function getData() {
+    const result = await fetch(endpoint)
+    const cityjson = await result.json();
+    cityjson.forEach(item => cities.push(item))
+  }
+  const search = document.querySelector(".search");
+  const suggestions = document.querySelector(".suggestions")
 
+  getData();
+  const handleKeyup = (e) => {
+    let q = e.target.value.toLowerCase();
+    let result = cities.filter((item) => {
+      return item.city.toLowerCase().includes(q) || item.state.toLowerCase().includes(q)
+    })
+    suggestions.innerHTML = ""
+    result.forEach(el => suggestions.insertAdjacentHTML("beforeend",`<li>${el.city}, ${el.state}</li>`))
+  }
+
+  search.addEventListener("keyup", handleKeyup)
 </script>
 </body>
 </html>
