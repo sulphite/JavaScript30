@@ -10,14 +10,30 @@
 <script>
   const canvas = document.getElementById("draw");
   const ctx = canvas.getContext("2d");
-  ctx.lineWidth = 10;
+  ctx.lineJoin = "round"
+  ctx.lineCap = "round"
+
   const coords = {
     x: 0,
-    y: 0}
+    y: 0,
+    hue: 0,
+    width: 10,
+    increasing: true}
 
   const prevCoords = {
     x: 0,
     y: 0
+  }
+
+  const changeHue = (n) => {
+    coords.hue = (n + 1) % 360
+  }
+
+  const changeWidth = (n) => {
+    coords.width = coords.increasing ? n + 1 : n - 1;
+    if(n > 100) {
+      coords.increasing = false
+    } else if(n < 10) {coords.increasing = true}
   }
 
   const updateCoords = (e) => {
@@ -32,11 +48,13 @@
   }
 
   const drawLine = (e) => {
-    ctx.strokeStyle = `hsla(${Math.floor(Math.random() * 360)}, 77%, 67%, 1)`;
-    ctx.lineWidth = 10 + Math.random() * 5;
+    changeHue(coords.hue);
+    changeWidth(coords.width);
+    ctx.strokeStyle = `hsl(${coords.hue}, 77%, 67%)`;
+    ctx.lineWidth = coords.width;
     ctx.beginPath()
-    ctx.moveTo(prevCoords.x,prevCoords.y)
-    ctx.lineTo(coords.x,coords.y)
+    ctx.moveTo(coords.x,coords.y)
+    ctx.lineTo(prevCoords.x,prevCoords.y)
     ctx.closePath()
     ctx.stroke()
   }
