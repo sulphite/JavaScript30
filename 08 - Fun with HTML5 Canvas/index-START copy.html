@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+  <link rel="icon" href="https://fav.farm/🔥" />
+</head>
+<body>
+<canvas id="draw" width="800" height="800"></canvas>
+<script>
+  const canvas = document.getElementById("draw");
+  const ctx = canvas.getContext("2d");
+  ctx.lineWidth = 10;
+  const coords = {
+    x: 0,
+    y: 0}
+
+  const prevCoords = {
+    x: 0,
+    y: 0
+  }
+
+  const updateCoords = (e) => {
+    prevCoords.x = coords.x
+    prevCoords.y = coords.y
+    coords.x = e.clientX
+    coords.y = e.clientY
+  }
+
+  const startDraw = () => {
+    canvas.addEventListener("mousemove", drawLine)
+  }
+
+  const drawLine = (e) => {
+    ctx.strokeStyle = `hsla(${Math.floor(Math.random() * 360)}, 77%, 67%, 1)`;
+    ctx.lineWidth = 10 + Math.random() * 5;
+    ctx.beginPath()
+    ctx.moveTo(prevCoords.x,prevCoords.y)
+    ctx.lineTo(coords.x,coords.y)
+    ctx.closePath()
+    ctx.stroke()
+  }
+
+  const stopListen = () => {
+    canvas.removeEventListener("mousemove",drawLine)
+  }
+
+  canvas.addEventListener("mousemove",updateCoords)
+  canvas.addEventListener("mousedown", startDraw)
+  canvas.addEventListener("mouseup", stopListen)
+  canvas.addEventListener("mouseout", stopListen)
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+</style>
+
+</body>
+</html>
