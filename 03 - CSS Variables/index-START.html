@@ -23,6 +23,20 @@
 
   <style>
 
+    :root {
+      --spacing: 10px;
+      --blur: 10px;
+      --base: #ffc600;
+    }
+
+    img {
+      filter: blur(var(--blur));
+      background-color: var(--base);
+      padding: var(--spacing);
+    }
+
+    .hl {color: var(--base)}
+
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -33,7 +47,7 @@
       color: white;
       font-family: 'helvetica neue', sans-serif;
       font-weight: 100;
-      font-size: 50px;
+      font-size: 40px;
     }
 
     .controls {
@@ -46,6 +60,18 @@
   </style>
 
   <script>
+    const root = document.documentElement;
+    const handleChange = (e) => {
+      let unit = e.target.dataset.sizing || "";
+      console.log(unit)
+      root.style.setProperty(`--${e.target.name}`, e.target.value + unit)
+    }
+
+    ["spacing", "blur", "base"].forEach((str) => {
+      let x = document.getElementById(str)
+      x.addEventListener("change", handleChange)
+    });
+
   </script>
 
 </body>
