@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Mouse Shadow</title>
   <link rel="icon" href="https://fav.farm/🔥" />
 </head>
+
 <body>
 
   <div class="hero">
@@ -12,30 +14,56 @@
   </div>
 
   <style>
-  html {
-    color: black;
-    font-family: sans-serif;
-  }
+    html {
+      color: black;
+      font-family: sans-serif;
+    }
 
-  body {
-    margin: 0;
-  }
+    body {
+      margin: 0;
+    }
 
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: black;
-  }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: black;
+    }
 
-  h1 {
-    text-shadow: 10px 10px 0 rgba(0,0,0,1);
-    font-size: 100px;
-  }
+    h1 {
+      text-shadow: 10px 10px 0 rgba(0, 0, 0, 1);
+      font-size: 100px;
+    }
+
   </style>
 
-<script>
-</script>
+  <script>
+    const h1 = document.querySelector("h1")
+    const hero = document.querySelector(".hero")
+    const walk = 200;
+
+    const handleMouseMove = (event) => {
+      let [x, y] = [event.offsetX, event.offsetY];
+      const [width, height] = [hero.offsetWidth, hero.offsetHeight]
+      // when we mouseover the h1 it kinda breaks so we have to add this part
+      if(event.target !== event.currentTarget) {
+        x += event.target.offsetLeft
+        y += event.target.offsetTop
+      }
+
+      let xdist = Math.round((x/width * walk) - walk/2)
+      let ydist = Math.round((y/height * walk) -walk/2)
+
+      h1.style.textShadow =
+        `${xdist}px ${ydist}px 0 rgba(255, 0, 255, 0.5),
+        ${-xdist}px ${-ydist}px 0 rgba(255, 255, 0, 0.5),
+        ${-ydist}px ${xdist}px 0 rgba(0, 255, 0, 0.5),
+        ${ydist}px ${-xdist}px 0 rgba(0, 255, 255, 0.5)`
+    }
+
+    hero.addEventListener("mousemove",handleMouseMove)
+  </script>
 </body>
+
 </html>
