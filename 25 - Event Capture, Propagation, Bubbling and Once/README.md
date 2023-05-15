@@ -1,6 +1,11 @@
 # Exercise 25: Event Propagation
 
-This isn't really a project at all, rather a more in depth explanation of how events work in your browser.
+This isn't really a project at all, rather a more in depth explanation of the order in which events trigger.
+
+Fire up the starting code and you will see 3 divs nested inside each other with classes "one", "two" and "three". Add click event listeners
+to these, with a callback function that logs the value of the classlist to the console. What will happen if you click on the middle div?
+
+## Explanation
 
 Say you have a page with some nested divs, and click event listeners on them. When you click on a nested div (or any other element), you trigger a click event on that div, but also on **every parent element of that div**, all the way up to the html element! This is what we mean by “bubbling”.
 
